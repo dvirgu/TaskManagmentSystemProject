@@ -1,8 +1,8 @@
 <html>
 <body>
-	<h2>Hello World!</h2>
+	<h2>Task Management System - Authentication System</h2>
 
-	<form method="get" action="MainSerlvet">
+	<form method="post" action="MainServlet">
 		Username: <input type="text" name="userName"/>
 		Pass: <input type="password" name="password"/>
 		<input type="submit" value="Send"/>
