@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>Login Page - TaskManagementSystem</title>
 </head>
 <body>
-The Result is : ${param["authenticationResult"]}
+<jsp:useBean id="user" scope="session" class="com.anarDvir.servlets.beans.UserBean"/>
+<jsp:getProperty property="userName" name="user"/> :
+The Result is : <jsp:getProperty property="authenticate" name="user"/>
 </body>
 </html>
