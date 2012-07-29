@@ -14,9 +14,6 @@ import javax.xml.ws.Holder;
 
 import com.anarDvir.servlets.beans.UserBean;
 import com.anarDvir.tools.Const;
-import com.anarDvir.webservicecontracts.clientwsdl.ClientWSDL;
-import com.anarDvir.webservicecontracts.clientwsdl.ClientWSDL_Service;
-import com.anarDvir.webservicecontracts.clientwsdl.userelementtype.UserElementType;
 
 
 /**
@@ -29,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 	
 	
 	private Logger logger = Logger.getLogger(LoginServlet.class.getName());
-	private ClientWSDL port = null;
+	//private ClientWSDL port = null;
 	
 
 	/**
@@ -40,19 +37,19 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void initClientWebService() {
+/*	public void initClientWebService() {
 		URL wsdlURL = ClientWSDL_Service.WSDL_LOCATION;
 
 		ClientWSDL_Service ss = new ClientWSDL_Service(wsdlURL, ClientWSDL_Service.SERVICE);
 		port = ss.getClientWSDLSOAP();  
 
-	}
+	}*/
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		
 		logger.info("excecute init method");
-		initClientWebService();
+		//initClientWebService();
 
 	}
 
@@ -84,7 +81,7 @@ public class LoginServlet extends HttpServlet {
 		String reqPass = request.getParameter("password");
 		UserBean userBean = new UserBean(reqUserName, reqPass);
 
-		port.userAuthentication(new Holder<UserElementType>(new UserElementType(userBean)));
+		//port.userAuthentication(new Holder<UserElementType>(new UserElementType(userBean)));
 		//TODO front-end query should return user : userBean = UserFrontEnd.login(userBean);
 		boolean authenticationResult = reqUserName.equalsIgnoreCase("user") && reqPass.equalsIgnoreCase("pass");
 		userBean.setAuthenticate(authenticationResult);// set the result of the query
