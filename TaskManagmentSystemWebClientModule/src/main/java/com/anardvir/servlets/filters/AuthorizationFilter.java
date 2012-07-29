@@ -1,4 +1,4 @@
-package com.anarDvir.servlets.filters;
+package com.anardvir.servlets.filters;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-import com.anarDvir.tools.Const;
+import com.anardvir.tools.Const;
 
 /**
  * Servlet Filter implementation class AuthorizationFilter

@@ -1,4 +1,4 @@
-package com.anarDvir.servlets;
+package com.anardvir.servlets;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Holder;
 
-import com.anarDvir.servlets.beans.UserBean;
-import com.anarDvir.tools.Const;
+import com.anardvir.servlets.beans.UserBean;
+import com.anardvir.tools.Const;
 
 
 /**
