@@ -1,62 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="ClientWSDL"
-	targetNamespace="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:ns0="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/UserElementType">
-
-	<!-- Types Scope -->
-	<wsdl:types>
-		<xsd:schema targetNamespace="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/">
-			<xsd:import
-				namespace="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/UserElementType"
-				schemaLocation="./ElementTypes/UserElementType.xsd" />
+<wsdl:definitions name="ClientWSDL" targetNamespace="http://www.anardvir.com/WebServiceContracts/ClientWSDL/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.anardvir.com/WebServiceContracts/ClientWSDL/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="http://www.anardvir.com/WebServiceContracts/ClientWSDL/UserElementType">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.anardvir.com/WebServiceContracts/ClientWSDL/">
+			<xsd:import namespace="http://www.anardvir.com/WebServiceContracts/ClientWSDL/UserElementType" schemaLocation="./ElementTypes/UserElementType.xsd"/>
 		</xsd:schema>
-	</wsdl:types>
-
-	<!-- Message Scope -->
-	<wsdl:message name="UserAuthenticationRequest">
-		<wsdl:part element="ns0:user" name="user" />
-	</wsdl:message>
-	
-	<wsdl:message name="UserAuthenticationResponse">
-		<wsdl:part element="ns0:user" name="user" />
-	</wsdl:message>
-
-	<!-- PortType Scope -->
-	<wsdl:portType name="ClientWSDL">
-		<wsdl:operation name="UserAuthentication">
-			<wsdl:documentation>Provide login authentication service</wsdl:documentation>
-			<wsdl:input message="tns:UserAuthenticationRequest" />
-			<wsdl:output message="tns:UserAuthenticationResponse"/>
-		</wsdl:operation>
-	</wsdl:portType>
-
-	<!-- Binding Scope -->
-	<wsdl:binding name="ClientWSDLSOAP" type="tns:ClientWSDL">
-		<soap:binding style="document"
-			transport="http://schemas.xmlsoap.org/soap/http" />
-
-		<wsdl:operation name="UserAuthentication">
-			<soap:operation
-				soapAction="http://www.anarDvir.com/WebServiceContracts/ClientWSDL/UserAuthentication" />
-			<wsdl:input>
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal" />
-			</wsdl:output>
-		</wsdl:operation>
-
-	</wsdl:binding>
-
-
-	<!-- Service Scope -->
-	<wsdl:service name="ClientWSDL">
-		<wsdl:port binding="tns:ClientWSDLSOAP" name="ClientWSDLSOAP">
-			<soap:address location="http://www.anarDvir.com/" />
-		</wsdl:port>
-	</wsdl:service>
-
-
+  </wsdl:types>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="userRequest" element="ns0:user">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="userResponse" element="ns0:user">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ClientPort">
+    <wsdl:operation name="login">
+<wsdl:documentation>Provide login authentication service</wsdl:documentation>
+      <wsdl:input name="userRequest" message="tns:loginRequest">
+    </wsdl:input>
+      <wsdl:output name="userReturn" message="tns:loginResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ClientBinding" type="tns:ClientPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="login"/>
+      <wsdl:input>
+        <soap:body parts="userRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="userResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ClientService">
+    <wsdl:port name="ClientPort" binding="tns:ClientBinding">
+      <soap:address location="http://localhost:8080/TaskManagmentSystemFrontEndModule/services/ClientPort"/>
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
 <title>Login to the system failed</title>
 
-Login has failed
+<h1>Login has failed</h1>
 </head>
 <body>
 

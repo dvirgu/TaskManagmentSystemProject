@@ -1,10 +1,8 @@
 package com.anardvir.servlets;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Holder;
 
-import com.anardvir.servlets.beans.UserBean;
 import com.anardvir.tools.Const;
+import com.anardvir.webservicecontracts.clientwsdl.ClientPort;
+import com.anardvir.webservicecontracts.clientwsdl.ClientService;
+import com.anardvir.webservicecontracts.clientwsdl.userelementtype.ObjectFactory;
+import com.anardvir.webservicecontracts.clientwsdl.userelementtype.UserElementType;
 
 
 /**
@@ -24,10 +25,14 @@ public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	
 	private Logger logger = Logger.getLogger(LoginServlet.class.getName());
-	//private ClientWSDL port = null;
+
+	private static ClientService _ss;
+	private static ClientPort _port;
 	
+	static {
+		initClientWebService();
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,21 +42,21 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-/*	public void initClientWebService() {
-		URL wsdlURL = ClientWSDL_Service.WSDL_LOCATION;
+	private static void initClientWebService() {
+		//URL wsdlURL = ClientWSDL_Service.WSDL_LOCATION;
 
-		ClientWSDL_Service ss = new ClientWSDL_Service(wsdlURL, ClientWSDL_Service.SERVICE);
-		port = ss.getClientWSDLSOAP();  
+		_ss = new ClientService(ClientService.WSDL_LOCATION, ClientService.SERVICE);
+		_port = _ss.getClientPort();
 
-	}*/
+	}
 
-	@Override
+/*	@Override
 	public void init(ServletConfig config) throws ServletException {
 		
 		logger.info("excecute init method");
-		//initClientWebService();
+		initClientWebService();
 
-	}
+	}*/
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -76,18 +81,20 @@ public class LoginServlet extends HttpServlet {
 		request.getSession().removeAttribute(Const.CURRENT_USER_ATT);
 		String redirectPageUri = Const.ERROR_LOGIN_PAGE; //Error Page. 		//TODO add error page redirection
 
-		//Create new UserBean entity 
+		//Create new UserBean entity
 		String reqUserName = request.getParameter("userName");
 		String reqPass = request.getParameter("password");
-		UserBean userBean = new UserBean(reqUserName, reqPass);
-
-		//port.userAuthentication(new Holder<UserElementType>(new UserElementType(userBean)));
-		//TODO front-end query should return user : userBean = UserFrontEnd.login(userBean);
-		boolean authenticationResult = reqUserName.equalsIgnoreCase("user") && reqPass.equalsIgnoreCase("pass");
-		userBean.setAuthenticate(authenticationResult);// set the result of the query
-
-		if (userBean.getAuthenticate()) {
-			request.getSession().setAttribute(Const.CURRENT_USER_ATT, userBean); //set the user bean on the session
+		
+		ObjectFactory objectFactory = new ObjectFactory();
+		UserElementType user = objectFactory.createUserElementType();
+		user.setUserName(reqUserName);
+		user.setPassword(reqPass);
+		
+		user = _port.login(user);
+		
+		if (user != null) {
+			//set the user bean on the session
+			request.getSession().setAttribute(Const.CURRENT_USER_ATT, user); 
 			redirectPageUri = Const.SUCCESS_LOGIN_PAGE;
 		}
 

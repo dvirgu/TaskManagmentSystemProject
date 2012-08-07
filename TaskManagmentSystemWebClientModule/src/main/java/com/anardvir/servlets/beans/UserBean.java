@@ -1,12 +1,12 @@
 package com.anardvir.servlets.beans;
 
+
 /**
  * 
  * 
  * @author Dvir
  *
  */
-
 public class UserBean {
 
 	/**
@@ -60,11 +60,9 @@ public class UserBean {
 		this.userName = userName;
 	}
 
-
 	public boolean getAuthenticate() {
 		return authenticate;
 	}
-
 
 	public void setAuthenticate(boolean isAuthenticated) {
 		this.authenticate = isAuthenticated;
