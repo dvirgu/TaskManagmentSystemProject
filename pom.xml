@@ -9,5 +9,6 @@
   	<module>TaskManagmentSystemWebClientModule</module>
     <module>TaskManagmentSystemFrontEndModule</module>
     <module>Test1223</module>
+    <module>TaskManagmentSystemBackEndModule</module>
   </modules>
 </project>

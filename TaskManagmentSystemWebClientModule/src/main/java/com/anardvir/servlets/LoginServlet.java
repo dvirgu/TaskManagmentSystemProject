@@ -43,20 +43,12 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	private static void initClientWebService() {
-		//URL wsdlURL = ClientWSDL_Service.WSDL_LOCATION;
 
 		_ss = new ClientService(ClientService.WSDL_LOCATION, ClientService.SERVICE);
 		_port = _ss.getClientPort();
 
 	}
 
-/*	@Override
-	public void init(ServletConfig config) throws ServletException {
-		
-		logger.info("excecute init method");
-		initClientWebService();
-
-	}*/
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

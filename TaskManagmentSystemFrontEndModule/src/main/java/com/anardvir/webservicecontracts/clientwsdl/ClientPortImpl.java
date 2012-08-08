@@ -40,7 +40,7 @@ public class ClientPortImpl implements ClientPort {
     public UserElementType login(UserElementType userRequest) { 
         LOG.info("Executing operation login");
         
-        //TODO request user form DAO
+        //TODO request user form back-end
         try {
            if (userRequest.getUserName().equalsIgnoreCase("user")
         		   && userRequest.getPassword().equalsIgnoreCase("test")) {

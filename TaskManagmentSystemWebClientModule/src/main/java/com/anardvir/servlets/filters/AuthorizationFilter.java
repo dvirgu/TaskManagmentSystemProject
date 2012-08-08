@@ -11,11 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 import com.anardvir.tools.Const;
+import com.anardvir.webservicecontracts.clientwsdl.userelementtype.UserElementType;
 
 /**
  * Servlet Filter implementation class AuthorizationFilter
  */
-@WebFilter(description = "cheking authorization for each request", urlPatterns = { "/*" })
+@WebFilter(description = "cheking authorization for each request", urlPatterns = { "/Login*" })
 public class AuthorizationFilter implements Filter {
 
     /**
@@ -40,10 +41,11 @@ public class AuthorizationFilter implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 	
-		String currentUser = (String) request.getAttribute(Const.CURRENT_USER_ATT);
+		UserElementType currentUser = (UserElementType) request.getAttribute(Const.CURRENT_USER_ATT);
 		
-		if (currentUser != null && !currentUser.equalsIgnoreCase("user")) {
-			request.getServletContext().getRequestDispatcher(Const.ERROR_LOGIN_PAGE);
+		if (currentUser == null) {
+			request.getServletContext()
+				.getRequestDispatcher(Const.ERROR_LOGIN_PAGE).forward(request, response);
 		}		
 
 		// pass the request along the filter chain
