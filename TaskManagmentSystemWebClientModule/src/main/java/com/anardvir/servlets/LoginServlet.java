@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Holder;
 
 import com.anardvir.tools.Const;
 import com.anardvir.webservicecontracts.clientwsdl.ClientPort;
@@ -71,21 +70,21 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.getSession().removeAttribute(Const.CURRENT_USER_ATT);
-		String redirectPageUri = Const.ERROR_LOGIN_PAGE; //Error Page. 		//TODO add error page redirection
+		String redirectPageUri = Const.ERROR_LOGIN_PAGE; //Error Page. 
 
-		//Create new UserBean entity
 		String reqUserName = request.getParameter("userName");
 		String reqPass = request.getParameter("password");
-		
+
+		//create new user from the web service object factory
 		ObjectFactory objectFactory = new ObjectFactory();
 		UserElementType user = objectFactory.createUserElementType();
 		user.setUserName(reqUserName);
 		user.setPassword(reqPass);
 		
-		user = _port.login(user);
+		user = _port.login(user); // getting user from WebService API
 		
 		if (user != null) {
-			//set the user bean on the session
+			//set the user
 			request.getSession().setAttribute(Const.CURRENT_USER_ATT, user); 
 			redirectPageUri = Const.SUCCESS_LOGIN_PAGE;
 		}
